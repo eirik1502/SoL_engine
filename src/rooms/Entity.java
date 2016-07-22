@@ -9,7 +9,7 @@ public abstract class Entity implements Updateable {
 	
 	protected float rotation;
 	
-	protected Sprite sprite;
+	//protected Sprite sprite;
 	
 	protected Room room;
 	
@@ -20,8 +20,8 @@ public abstract class Entity implements Updateable {
 	 * @param y
 	 * @param rotation
 	 */
-	public Entity(Sprite sprite, float x, float y, float rotation) {
-		this.sprite = sprite;
+	public Entity(float x, float y, float rotation) {
+		//this.sprite = sprite;
 		this.x = x;
 		this.y = y;
 		this.rotation = rotation;
@@ -38,9 +38,9 @@ public abstract class Entity implements Updateable {
 		
 	}
 	
-	public Sprite getSprite() {
-		return sprite;
-	}
+//	public Sprite getSprite() {
+//		return sprite;
+//	}
 	
 	@Override
 	public void update() {

@@ -44,15 +44,15 @@ public class GraphicsHandeler {
 
 
 	
-	public void render(Entity[] entities, Text[] texts) {
+	public void render(ArrayList<GraphicsEntity> entities) { //, Text[] texts) {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 //		for (Renderable renderable : renderables) {
 //			renderable.render( renderObject );
 //		}
-		renderEntities(entities);
-		renderTexts(texts);
+		renderEntities( entities.toArray(new GraphicsEntity[0]) );
+		//renderTexts(texts);
 		
 		glfwSwapBuffers(window);
 		
@@ -61,9 +61,9 @@ public class GraphicsHandeler {
 			System.err.println("GL error: " + error);
 	}
 	
-	private void renderEntities(Entity[] entities) {
+	private void renderEntities(GraphicsEntity[] entities) {
 		
-		for (Entity e : entities) {
+		for (GraphicsEntity e : entities) {
 			renderEntity( e);
 		}
 	}
@@ -74,7 +74,7 @@ public class GraphicsHandeler {
 		}
 	}
 	
-	private void renderEntity( Entity e) {
+	private void renderEntity( GraphicsEntity e) {
 		renderSprite(e.getSprite(), e.getX(), e.getY(), e.getRotation());
 	}
 	

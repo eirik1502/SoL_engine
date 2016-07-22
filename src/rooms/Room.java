@@ -45,7 +45,7 @@ public abstract class Room implements Updateable {
 		}
 	}
 	
-	void setInputState( RelevantInputState inputState ) {
+	public void setInputState( RelevantInputState inputState ) {
 		this.inputState = inputState;
 	}
 	public RelevantInputState getInputState() {
