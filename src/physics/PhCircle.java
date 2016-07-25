@@ -33,5 +33,10 @@ public class PhCircle extends PhShape{
 	public void setRadius(float radius) {
 		this.radius = radius;
 	}
+
+	@Override
+	public PhRectangle getBoundingBox() {
+		return new PhRectangle(x-radius,y-radius,2*radius,2*radius);
+	}
 	
 }
