@@ -37,7 +37,6 @@ public class PhRectangle extends PhShape{
 		this.height = height;
 	}
 
-	@Override
 	public PhRectangle getBoundingBox() {
 		return this;
 	}
