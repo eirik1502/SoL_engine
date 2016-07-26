@@ -36,7 +36,6 @@ public class PhCircle extends PhShape{
 
 	@Override
 	public PhRectangle getBoundingBox() {
-		return new PhRectangle(x-radius,y-radius,2*radius,2*radius);
+		return new PhRectangle(x-radius, y-radius, 2*radius, 2*radius);
 	}
-	
 }
