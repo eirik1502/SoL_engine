@@ -15,5 +15,9 @@ public class Vector3f {
 		this.y = y;
 		this.z = z;
 	}
+	
 
+	public Vector3f subtract(Vector3f vec) {
+		return new Vector3f(x-=vec.x, y-=vec.y, z-=vec.z);
+	}
 }

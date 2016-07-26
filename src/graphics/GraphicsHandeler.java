@@ -21,7 +21,7 @@ import rooms.Text;
 public class GraphicsHandeler {
 
 
-
+	public static float WINDOW_WIDTH, WINDOW_HEIGHT;
 
 	private long window;
 
@@ -32,6 +32,8 @@ public class GraphicsHandeler {
 
 	
 	public GraphicsHandeler(long window, float width, float height) {
+		WINDOW_WIDTH = width;
+		WINDOW_HEIGHT = height;
 		this.window = window;
 		//renderObject = new RenderObject();
 		shader = new Shader("shaders/shader.vert", "shaders/shader.frag");
@@ -44,14 +46,14 @@ public class GraphicsHandeler {
 
 
 	
-	public void render(ArrayList<GraphicsEntity> entities) { //, Text[] texts) {
+	public void render(Camera camera, ArrayList<GraphicsEntity> entities) { //, Text[] texts) {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 //		for (Renderable renderable : renderables) {
 //			renderable.render( renderObject );
 //		}
-		renderEntities( entities.toArray(new GraphicsEntity[0]) );
+		renderEntities( camera, entities.toArray(new GraphicsEntity[0]) );
 		//renderTexts(texts);
 		
 		glfwSwapBuffers(window);
@@ -61,10 +63,10 @@ public class GraphicsHandeler {
 			System.err.println("GL error: " + error);
 	}
 	
-	private void renderEntities(GraphicsEntity[] entities) {
+	private void renderEntities(Camera camera, GraphicsEntity[] entities) {
 		
 		for (GraphicsEntity e : entities) {
-			renderEntity( e);
+			renderEntity(camera, e);
 		}
 	}
 	
@@ -74,8 +76,31 @@ public class GraphicsHandeler {
 		}
 	}
 	
-	private void renderEntity( GraphicsEntity e) {
-		renderSprite(e.getSprite(), e.getX(), e.getY(), e.getRotation());
+	private void renderEntity( Camera camera, GraphicsEntity e) {
+		float dx = e.getX();
+		float dy = e.getY();
+		float rotation = e.getRotation();
+		
+		Sprite s = e.getSprite();
+		VertexArray va = s.getVertexArray();
+		Texture tex = s.getTexture();
+		float cx = s.getCenterX();
+		float cy = s.getCenterY();
+		
+		shader.bind();
+		tex.bind();
+		va.bind();
+		Vector3f cameraPos = new Vector3f(camera.getX()-WINDOW_WIDTH/2, camera.getY()-WINDOW_HEIGHT/2, 0f);
+		shader.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(dx, dy, 0.0f).subtract( cameraPos ) ));
+		Matrix4f modelTranslation = Matrix4f.translate(new Vector3f(-cx, -cy, 0) );
+		Matrix4f modelRotation = Matrix4f.rotate(rotation);
+		shader.setUniformMat4f("ml_matrix", modelRotation.multiply(modelTranslation)  );
+		shader.setUniform4f("absoluteColor", new Vector4f(-1.0f, 0f, 0f, 0f));
+		va.draw();
+		
+		va.unbind();
+		tex.unbind();
+		shader.unbind();
 	}
 	
 	public void renderSprite(Sprite image, float dx, float dy, float rotation) {
