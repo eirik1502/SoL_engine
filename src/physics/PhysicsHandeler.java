@@ -56,15 +56,40 @@ public class PhysicsHandeler {
 		return distSquared < maxDistSquared;
 	}
 	public static boolean isCollision(PhCircle circ1, PhRectangle rect2) {
-		throw new UnsupportedOperationException("Circ-rect collision not supported yet");
-//		float r1 = circ1.getRadius();
-//		float x1 = circ1.getX();
-//		float y1 = circ1.getY();
-//		float x2 = rect2.getX();
-//		float y2 = rect2.getY();
-//		float w2 = rect2.getWidth();
-//		float h2 = rect2.getHeight();
+		//throw new UnsupportedOperationException("Circ-rect collision not supported yet");
+		float r1 = circ1.getRadius();
+		float cx = circ1.getX();
+		float cy = circ1.getY();
+		float x2 = rect2.getX();
+		float y2 = rect2.getY();
+		float w2 = rect2.getWidth();
+		float h2 = rect2.getHeight();
 		
+		float bx = cx-r1;
+		float by = cy-r1;
+		float bWidth = by + 2*r1;
+		float bHeigth = bx + 2*r1;
+		if (!(isCollision(rect2, new PhRectangle(bx, by, bWidth, bHeigth)))){
+			return false;
+		}
+		float r2 = r1*r1;
+		if (y2>cy){
+			if (x2>cx){
+				return (r2>(x2-cx)*(x2-cx) + (y2-cy)*(y2-cy));
+			}
+			else if (cx>x2+w2){
+				return (r2>(x2+w2-cx)*(x2+w2-cx) + (y2-cy)*(y2-cy));
+			}
+		}
+		else if (y2+h2<cy) {
+			if (x2>cx){
+				return (r2>(x2-cx)*(x2-cx) + (y2+h2-cy)*(y2+h2-cy));
+			}
+			else if (cx>x2+w2){
+				return (r2>(x2+w2-cx)*(x2+w2-cx) + (y2+h2-cy)*(y2+h2-cy));
+			}
+		}
+		return true;
 		
 	}
 	public static boolean isCollision(PhRectangle rect1, PhRectangle rect2) {

@@ -36,5 +36,10 @@ public class PhRectangle extends PhShape{
 	public void setHeight(float height) {
 		this.height = height;
 	}
+
+	@Override
+	public PhRectangle getBoundingBox() {
+		return this;
+	}
 	
 }
