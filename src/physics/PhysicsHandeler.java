@@ -65,11 +65,14 @@ public class PhysicsHandeler {
 		float w2 = rect2.getWidth();
 		float h2 = rect2.getHeight();
 		
-		float bx = cx-r1;
-		float by = cy-r1;
-		float bWidth = by + 2*r1;
-		float bHeigth = bx + 2*r1;
-		if (!(isCollision(rect2, new PhRectangle(bx, by, bWidth, bHeigth)))){
+//		float bx = cx-r1;
+//		float by = cy-r1;
+//		float bWidth = 2*r1;
+//		float bHeigth = 2*r1;
+//		if (!(isCollision(rect2, new PhRectangle(bx, by, bWidth, bHeigth)))){
+//			return false;
+//		}
+		if (!isCollision(rect2, circ1.getBoundingBox())){
 			return false;
 		}
 		float r2 = r1*r1;
