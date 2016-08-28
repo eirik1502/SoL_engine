@@ -6,6 +6,7 @@ import utils.VertexArrayUtils;
 
 public class Font {
 
+	
 	private static Font basicFont18 = new Font("res/font_18.png", 4,  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890|§.,:;-_'*~^!#¤%&/()=?`@£${[]}+´\\");
 
 	

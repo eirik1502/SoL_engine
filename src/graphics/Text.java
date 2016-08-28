@@ -1,47 +1,28 @@
-package rooms;
+package graphics;
 
-import graphics.Font;
-
-public class Text {
+public class Text extends Renderable{
 
 	
-	private float x, y, rotation;
 	
 	private Font font;
 	private int size;
 	private String string;
 	
 	
-	public Text(String string, Font font, int size, float x, float y, float rotation) {
+	public Text(String string, float x, float y) {
+		this(string, Font.getStandardFont(), 18, x, y, 0, 0.99f);
+	}
+	public Text(String string, Font font, int size, float x, float y, float rotation, float depth) {
+		super(x, y, rotation, depth);
+		
 		if (size != 18) throw new IllegalArgumentException("only size 18 is supported");
 		this.string = string;
 		this.font = font;
 		this.size = size;
-		this.x = x;
-		this.y = y;
-		this.rotation = rotation;
 		
 	}
 
 
-	public float getX() {
-		return x;
-	}
-	public void setX(float x) {
-		this.x = x;
-	}
-	public float getY() {
-		return y;
-	}
-	public void setY(float y) {
-		this.y = y;
-	}
-	public float getRotation() {
-		return rotation;
-	}
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
-	}
 	public Font getFont() {
 		return font;
 	}

@@ -1,12 +1,10 @@
 package rooms;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 
-import graphics.GraphicsHandeler;
-import userInput.InputHandeler;
-import userInput.InputState;
+import graphics.Camera;
+import graphics.GraphicsEntity;
 
 public class RoomHandeler  {
 	
@@ -34,23 +32,22 @@ public class RoomHandeler  {
 		gotoStartingRoom();
 	}
 	
-	public void update(RelevantInputState inputState) {
-		currentRoom.setInputState(inputState);
+	public void update() {
 		currentRoom.update();
 	}
 	
-	public Entity[] getEntities() {
-		return currentRoom.getEntities();
+	public Camera getCamera() {
+		return currentRoom.getCamera();
 	}
-	public Text[] getTexts() {
-		return currentRoom.getTexts();
+	public ArrayList<? extends GraphicsEntity> getGraphicsEntities() {
+		return currentRoom.getGraphicsEntities();
 	}
-	
 	
 	private void gotoStartingRoom() {
 		if (rooms.size() == 0) throw new IllegalStateException("There are no rooms set, cannot start first room");
 		Room newRoom = getRoomFromNumber(0);
 		currentRoom = newRoom;
+		currentRoom.init(this);
 		currentRoomNumber = 0;
 		currentRoom.load();
 		currentRoom.start();
@@ -61,6 +58,7 @@ public class RoomHandeler  {
 		currentRoom.stop();
 		currentRoom.unload();
 		currentRoom = newRoom;
+		currentRoom.init(this);
 		currentRoomNumber = roomNumber;
 		currentRoom.load();
 		currentRoom.start();

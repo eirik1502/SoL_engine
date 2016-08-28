@@ -1,50 +1,29 @@
 package graphics;
 
+import java.util.ArrayList;
+
+public abstract class GraphicsEntity {
 
 
-public class GraphicsEntity {
+	
+	private ArrayList<Sprite> sprites = new ArrayList<>();
+	private ArrayList<Text> texts = new ArrayList<>();
+	//private ArrayList<Shape> shapes;
+	
+	
+	public ArrayList<Sprite> getSprites() {
+		return sprites;
+	}
+	public ArrayList<Text> getTexts() {
+		return texts;
+	}
 
-	protected float x, y;
 	
-	protected float rotation;
-	
-	protected Sprite sprite;
-	
-	
-	public GraphicsEntity(Sprite sprite, float x, float y, float rotation) {
-		this.sprite = sprite;
-		this.x = x;
-		this.y = y;
-		this.rotation = rotation;
+	public void addSprite(Sprite sprite) {
+		sprites.add(sprite);
+	}
+	public void addText(Text text) {
+		texts.add(text);
 	}
 	
-	public Sprite getSprite() {
-		return sprite;
-	}
-	
-	
-	public float getX() {
-		return x;
-	}
-	public void setX(float x) {
-		this.x = x;
-	}
-	public void addX(float x) {
-		this.x += x;
-	}
-	public float getY() {
-		return y;
-	}
-	public void setY(float y) {
-		this.y = y;
-	}
-	public void addY(float y) {
-		this.y += y;
-	}
-	public float getRotation() {
-		return rotation;
-	}
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
-	}
 }

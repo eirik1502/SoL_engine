@@ -4,9 +4,20 @@ import java.util.Arrays;
 
 import utils.VertexArrayUtils;
 
-public class Sprite {
-
+public class Sprite extends Renderable {
+	
+	
 	private static final int UPS = 60;
+	
+	
+
+	private float width;
+	private float height;
+	private float depth;
+	
+	private float centerX;
+	private float centerY;
+	
 	
 	private VertexArray vertexArray;
 	private Texture[] textures;
@@ -20,52 +31,31 @@ public class Sprite {
 	private int imageIndex = 0;
 	
 	
-	private float depth;
-	private float width;
-	private float height;
-	
-	private float centerX;
-	private float centerY;
-	
 	private AnimationListener animationEndListener = null;
 	
-	
+	public Sprite(String imageFilename, int imageCount, float centerX, float centerY) {
+		this(imageFilename, imageCount, centerX, centerY, 0f, 0f, 0f, 0f);
+	}
 	public Sprite(String imageFilename, int imageCount, float centerX, float centerY, float depth) {
+		this(imageFilename, imageCount, centerX, centerY, 0f, 0f, 0f, depth);
+	}
+	public Sprite(String imageFilename, int imageCount, float centerX, float centerY, float startX, float startY, float rotation, float depth) {
+		super(startX, startY, rotation, depth);
+		
 		textures = Texture.loadImageStrip(imageFilename, imageCount);
 		width = textures[0].getWidth();
 		height = textures[0].getHeight();
-		commonInit(centerX, centerY, depth);
+		
+		this.centerX = centerX;
+		this.centerY = centerY;
+		
+		vertexArray = VertexArrayUtils.createRectangle( width, height, 0);
+		
 		this.imageCount = imageCount;
 	}
 	
 
-	public Sprite(String imageFilename, float centerX, float centerY) {
-		this(imageFilename, centerX, centerY, 0);
-//		texture = new Texture( imageFilename);
-//		width = texture.getWidth();
-//		height = texture.getHeight();
-//		depth = 0;
-//		this.centerX = centerX;
-//		this.centerY = centerY;
-//		vertexArray = getRectangleVertexArray( width, height, depth);
-	}
-	
-	public Sprite(String imageFilename, float centerX, float centerY, float depth) {
-		textures = new Texture[1];
-		Texture texture = new Texture( imageFilename);
-		width = texture.getWidth();
-		height = texture.getHeight();
-		textures[0] = texture;
-		commonInit(centerX, centerY, depth);
-		imageCount = 1;
-	}
-	
-	private void commonInit(float centerX, float centerY, float depth) {
-		this.depth = depth;
-		this.centerX = centerX;
-		this.centerY = centerY;
-		vertexArray = VertexArrayUtils.createRectangle( width, height, depth);
-	}
+
 	
 	
 	public VertexArray getVertexArray() {

@@ -3,25 +3,37 @@ package rooms;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-
+import graphics.Camera;
+import graphics.GraphicsEntity;
 import graphics.Sprite;
+import graphics.Text;
+
 
 public abstract class Room implements Updateable {
 
 	
 	//private RoomObjectsContainer roomObjectsContainer;
-	private ArrayList<Entity> entities = new ArrayList<>();
-	private ArrayList<Text> texts = new ArrayList<>();
+	private ArrayList<RoomEntity> entities = new ArrayList<>();
 	
-	private LinkedList<Entity> addEntityBuffer = new LinkedList<>();
-	private LinkedList<Entity> removeEntityBuffer = new LinkedList<>();
+	private LinkedList<RoomEntity> addEntityBuffer = new LinkedList<>();
+	private LinkedList<RoomEntity> removeEntityBuffer = new LinkedList<>();
 	protected boolean updatingEntities = false;
 	
-	private RelevantInputState inputState;
+	private float width, height;
+	private Camera camera;
+	
+	private RoomHandeler roomHandeler;
 	
 	
-	public Room() {
+	public Room(float width, float height) {
+		this.width = width;
+		this.height = height;
+		camera = new Camera(0,0,width, height);
 		//this.roomObjectsContainer = new RoomObjectsContainer();
+	}
+	
+	public void init(RoomHandeler handeler) {
+		this.roomHandeler = handeler;
 	}
 	
 	public abstract void load();
@@ -45,34 +57,25 @@ public abstract class Room implements Updateable {
 		}
 	}
 	
-	public void setInputState( RelevantInputState inputState ) {
-		this.inputState = inputState;
+	public Camera getCamera() {
+		return camera;
 	}
-	public RelevantInputState getInputState() {
-		return inputState;
-	}
-	
-	public Entity[] getEntities() {
-		return entities.toArray(new Entity[0]);
-	}
-	
-	public Text[] getTexts() {
-		return texts.toArray(new Text[0]);
+	public ArrayList<? extends GraphicsEntity> getGraphicsEntities() {
+		return entities;
 	}
 
 	
-	public void addEntity(Entity e) {
+	public void addEntity(RoomEntity e) {
 		if (updatingEntities) { //not added at all
 			addEntityBuffer.add(e);
 			return;
 		}
 		else {
 			entities.add(e);
-			e.roomInit(this);
-			e.start();
+			e.start(this);
 		}
 	}
-	public void removeEntity(Entity e) {
+	public void removeEntity(RoomEntity e) {
 		if (updatingEntities) { //not added at all
 			removeEntityBuffer.add(e);
 			return;
@@ -82,11 +85,11 @@ public abstract class Room implements Updateable {
 		}
 	}
 	
-	public void addText(Text t) {
-		texts.add(t);
+	public void gotoNextRoom() {
+		roomHandeler.gotoNextRoom();
 	}
-	public void removeText(Text t) {
-		texts.remove(t);
+	public void gotoPreviousRoom() {
+		roomHandeler.gotoPreviousRoom();
 	}
 	
 	

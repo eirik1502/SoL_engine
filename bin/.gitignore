@@ -1,5 +1,8 @@
 /StageConstructor/
 /graphics/
-/rooms/
-/physics/
+/lwjgl/
 /maths/
+/physics/
+/rooms/
+/userInput/
+/utils/
